@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fluids.Fluid;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 
 import gregtech.api.covers.CoverContext;
@@ -12,6 +14,8 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.ICoverable;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.util.GTUtility;
+import gregtech.common.gui.modularui2.cover.CoverGui;
+import gregtech.common.gui.modularui2.cover.CoverPlayerDetectorGui;
 import gregtech.common.gui.mui1.cover.PlayerDetectorUIFactory;
 
 public class CoverPlayerDetector extends CoverLegacyData {
@@ -128,6 +132,11 @@ public class CoverPlayerDetector extends CoverLegacyData {
     }
 
     // GUI stuff
+
+    @Override
+    protected @NotNull CoverGui<?> getCoverGui() {
+        return new CoverPlayerDetectorGui();
+    }
 
     @Override
     public boolean hasCoverGUI() {
