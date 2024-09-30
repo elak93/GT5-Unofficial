@@ -15,6 +15,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.cleanroommc.modularui.utils.item.ItemStackHandler;
+import com.cleanroommc.modularui.utils.item.LimitingItemStackHandler;
 import com.google.common.io.ByteArrayDataInput;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 
@@ -25,14 +27,20 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.ICoverable;
 import gregtech.api.util.GTByteBuffer;
 import gregtech.api.util.GTUtility;
+import gregtech.common.gui.modularui2.cover.CoverGui;
+import gregtech.common.gui.modularui2.cover.CoverItemFilterGui;
 import gregtech.common.gui.mui1.cover.ItemFilterUIFactory;
 import io.netty.buffer.ByteBuf;
 
 public class CoverItemFilter extends Cover {
 
     private final boolean mExport;
+
+    /**
+     * This variable is extremely confusing... mWhitelist == false means whitelist mode, true means blacklist mode
+     */
     private boolean mWhitelist;
-    private ItemStack mFilter;
+    private ItemStackHandler filter = new LimitingItemStackHandler(1, 1);
 
     public CoverItemFilter(CoverContext context, boolean isExport, ITexture coverTexture) {
         super(context, coverTexture);
@@ -49,48 +57,52 @@ public class CoverItemFilter extends Cover {
         return this;
     }
 
-    public ItemStack getFilter() {
-        return mFilter;
+    public ItemStackHandler getFilter() {
+        return filter;
     }
 
-    public CoverItemFilter setFilter(ItemStack filter) {
-        this.mFilter = filter;
+    public CoverItemFilter setFilter(ItemStackHandler filter) {
+        this.filter = filter;
         return this;
     }
 
     @Override
     protected void initializeData() {
         mWhitelist = false;
-        mFilter = null;
+        filter = new LimitingItemStackHandler(1, 1);
     }
 
     @Override
     protected void loadFromNbt(NBTBase nbt) {
         NBTTagCompound tag = (NBTTagCompound) nbt;
         mWhitelist = tag.getBoolean("mWhitelist");
-        if (tag.hasKey("mFilter", Constants.NBT.TAG_COMPOUND))
-            mFilter = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("mFilter"));
-        else mFilter = null;
+        if (tag.hasKey("mFilter", Constants.NBT.TAG_COMPOUND)) {
+            // Old format
+            filter = new ItemStackHandler(1);
+            filter.setStackInSlot(0, ItemStack.loadItemStackFromNBT(tag.getCompoundTag("mFilter")));
+        } else {
+            filter.deserializeNBT(tag.getCompoundTag("filter"));
+        }
     }
 
     @Override
     protected void readFromPacket(ByteArrayDataInput byteData) {
         mWhitelist = byteData.readBoolean();
-        mFilter = GTByteBuffer.readItemStackFromGreggyByteBuf(byteData);
+        filter.deserializeNBT(GTByteBuffer.readCompoundTagFromGreggyByteBuf(byteData));
     }
 
     @Override
     protected @NotNull NBTBase saveDataToNbt() {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setBoolean("mWhitelist", mWhitelist);
-        if (mFilter != null) tag.setTag("mFilter", mFilter.writeToNBT(new NBTTagCompound()));
+        tag.setTag("filter", filter.serializeNBT());
         return tag;
     }
 
     @Override
     protected void writeDataToByteBuf(ByteBuf byteBuf) {
         byteBuf.writeBoolean(mWhitelist);
-        ByteBufUtils.writeItemStack(byteBuf, mFilter);
+        ByteBufUtils.writeTag(byteBuf, filter.serializeNBT());
     }
 
     public boolean isRedstoneSensitive() {
@@ -109,7 +121,7 @@ public class CoverItemFilter extends Cover {
         final ForgeDirection fromSide = !mExport ? coverSide.getOpposite() : coverSide;
         final ForgeDirection toSide = mExport ? coverSide.getOpposite() : coverSide;
 
-        final List<ItemStack> filter = Collections.singletonList(mFilter);
+        final List<ItemStack> filter = Collections.singletonList(this.filter.getStackInSlot(0));
 
         moveMultipleItemStacks(
             fromEntity,
@@ -129,10 +141,10 @@ public class CoverItemFilter extends Cover {
     public boolean onCoverRightClick(EntityPlayer aPlayer, float aX, float aY, float aZ) {
         final ItemStack tStack = aPlayer.inventory.getCurrentItem();
         if (tStack != null) {
-            mFilter = tStack;
+            filter.setStackInSlot(0, tStack);
             GTUtility.sendChatToPlayer(aPlayer, GTUtility.trans("299", "Item Filter: ") + tStack.getDisplayName());
         } else {
-            mFilter = null;
+            filter.setStackInSlot(0, null);
             GTUtility.sendChatToPlayer(aPlayer, GTUtility.trans("300", "Filter Cleared!"));
         }
         return true;
@@ -143,7 +155,7 @@ public class CoverItemFilter extends Cover {
         mWhitelist = !mWhitelist;
         GTUtility.sendChatToPlayer(
             aPlayer,
-            mWhitelist ? GTUtility.trans("125.1", "Whitelist Mode") : GTUtility.trans("124.1", "Blacklist Mode"));
+            mWhitelist ? GTUtility.trans("124.1", "Blacklist Mode") : GTUtility.trans("125.1", "Whitelist Mode"));
     }
 
     @Override
@@ -187,6 +199,11 @@ public class CoverItemFilter extends Cover {
     }
 
     // GUI stuff
+
+    @Override
+    protected @NotNull CoverGui<?> getCoverGui() {
+        return new CoverItemFilterGui();
+    }
 
     @Override
     public boolean hasCoverGUI() {
