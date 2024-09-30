@@ -3,6 +3,8 @@ package gregtech.common.covers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fluids.Fluid;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 
 import gregtech.api.covers.CoverContext;
@@ -11,6 +13,8 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IMachineProgress;
 import gregtech.api.metatileentity.BaseMetaPipeEntity;
 import gregtech.api.util.GTUtility;
+import gregtech.common.gui.modularui2.cover.CoverGui;
+import gregtech.common.gui.modularui2.cover.CoverShutterGui;
 import gregtech.common.gui.mui1.cover.ShutterUIFactory;
 
 public class CoverShutter extends CoverLegacyData {
@@ -90,6 +94,11 @@ public class CoverShutter extends CoverLegacyData {
     }
 
     // GUI stuff
+
+    @Override
+    protected @NotNull CoverGui<?> getCoverGui() {
+        return new CoverShutterGui();
+    }
 
     @Override
     public boolean hasCoverGUI() {
