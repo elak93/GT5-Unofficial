@@ -6,6 +6,8 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 
 import gregtech.api.covers.CoverContext;
@@ -14,6 +16,8 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.ICoverable;
 import gregtech.api.interfaces.tileentity.IMachineProgress;
 import gregtech.api.util.GTUtility;
+import gregtech.common.gui.modularui2.cover.CoverGui;
+import gregtech.common.gui.modularui2.cover.CoverPumpGui;
 import gregtech.common.gui.mui1.cover.PumpUIFactory;
 
 public class CoverPump extends CoverLegacyData {
@@ -146,6 +150,11 @@ public class CoverPump extends CoverLegacyData {
     }
 
     // GUI stuff
+
+    @Override
+    protected @NotNull CoverGui<?> getCoverGui() {
+        return new CoverPumpGui();
+    }
 
     @Override
     public boolean hasCoverGUI() {
