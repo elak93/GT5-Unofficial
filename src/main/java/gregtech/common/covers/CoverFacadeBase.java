@@ -26,6 +26,8 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTByteBuffer;
 import gregtech.api.util.GTRenderingWorld;
 import gregtech.api.util.GTUtility;
+import gregtech.common.gui.modularui2.cover.CoverFacadeBaseGui;
+import gregtech.common.gui.modularui2.cover.CoverGui;
 import gregtech.common.gui.mui1.cover.FacadeBaseUIFactory;
 import io.netty.buffer.ByteBuf;
 
@@ -271,6 +273,11 @@ public abstract class CoverFacadeBase extends Cover {
     }
 
     // GUI stuff
+
+    @Override
+    protected @NotNull CoverGui<?> getCoverGui() {
+        return new CoverFacadeBaseGui();
+    }
 
     @Override
     public boolean hasCoverGUI() {
