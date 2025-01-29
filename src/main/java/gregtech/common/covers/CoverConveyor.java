@@ -7,6 +7,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 
 import gregtech.api.covers.CoverContext;
@@ -15,6 +17,8 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.ICoverable;
 import gregtech.api.interfaces.tileentity.IMachineProgress;
 import gregtech.api.util.GTUtility;
+import gregtech.common.gui.modularui2.cover.CoverConveyorGui;
+import gregtech.common.gui.modularui2.cover.CoverGui;
 import gregtech.common.gui.mui1.cover.ConveyorUIFactory;
 
 public class CoverConveyor extends CoverLegacyData {
@@ -137,6 +141,11 @@ public class CoverConveyor extends CoverLegacyData {
     }
 
     // GUI stuff
+
+    @Override
+    protected @NotNull CoverGui<?> getCoverGui() {
+        return new CoverConveyorGui();
+    }
 
     @Override
     public boolean hasCoverGUI() {
