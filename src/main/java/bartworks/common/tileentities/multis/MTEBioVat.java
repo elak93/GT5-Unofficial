@@ -24,6 +24,7 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_ACTIVE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_ACTIVE_GLOW;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_GLOW;
+import static gregtech.api.util.GTRecipeConstants.GLASS;
 import static gregtech.api.util.GTStructureUtility.ofHatchAdder;
 
 import java.util.ArrayList;
@@ -81,9 +82,11 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.ParallelHelper;
+import gregtech.api.util.recipe.Sievert;
 
 public class MTEBioVat extends MTEEnhancedMultiBlockBase<MTEBioVat> implements ISurvivalConstructable {
 
@@ -105,6 +108,7 @@ public class MTEBioVat extends MTEEnhancedMultiBlockBase<MTEBioVat> implements I
     private int mExpectedMultiplier = 0;
     private int mTimes = 0;
     private boolean isVisibleFluid = false;
+    private final Sievert defaultSievertData = new Sievert(0, false);
 
     public MTEBioVat(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -156,11 +160,14 @@ public class MTEBioVat extends MTEEnhancedMultiBlockBase<MTEBioVat> implements I
             .beginStructureBlock(5, 4, 5, false)
             .addController("Front bottom center")
             .addCasingInfoMin("Clean Stainless Steel Casings", 19, false)
-            .addOtherStructurePart("Glass", "Hollow two middle layers", 2)
+            .addOtherStructurePart(
+                StatCollector.translateToLocal("tooltip.bw.structure.glass"),
+                "Hollow two middle layers",
+                2)
             .addStructureInfo("The glass can be any glass, i.e. Tinkers Construct Clear Glass")
             .addStructureInfo("Some Recipes need more advanced Glass Types")
             .addMaintenanceHatch("Any casing", 1)
-            .addOtherStructurePart("Radio Hatch", "Any casing", 1)
+            .addOtherStructurePart(StatCollector.translateToLocal("tooltip.bw.structure.radio_hatch"), "Any casing", 1)
             .addInputBus("Any casing", 1)
             .addOutputBus("Any casing", 1)
             .addInputHatch("Any casing", 1)
@@ -168,15 +175,6 @@ public class MTEBioVat extends MTEEnhancedMultiBlockBase<MTEBioVat> implements I
             .addEnergyHatch("Any casing", 1)
             .toolTipFinisher();
         return tt;
-    }
-
-    public static int[] specialValueUnpack(int aSpecialValue) {
-        int[] ret = new int[4];
-        ret[0] = aSpecialValue & 0xF; // = glass tier
-        ret[1] = aSpecialValue >>> 4 & 0b11; // = special value
-        ret[2] = aSpecialValue >>> 6 & 0b1; // boolean exact svt | 1 = true | 0 = false
-        ret[3] = aSpecialValue >>> 7 & Integer.MAX_VALUE; // = sievert
-        return ret;
     }
 
     private int getInputCapacity() {
@@ -244,21 +242,24 @@ public class MTEBioVat extends MTEEnhancedMultiBlockBase<MTEBioVat> implements I
             @NotNull
             @Override
             protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                Sievert data = recipe.getMetadataOrDefault(GTRecipeConstants.SIEVERT, defaultSievertData);
+                int sievert = data.sievert;
+                boolean isExact = data.isExact;
+                int glass = recipe.getMetadataOrDefault(GLASS, 0);
                 if (!BWUtil.areStacksEqualOrNull((ItemStack) recipe.mSpecialItems, MTEBioVat.this.getControllerSlot()))
                     return CheckRecipeResultRegistry.NO_RECIPE;
-                int[] conditions = MTEBioVat.specialValueUnpack(recipe.mSpecialValue);
-                MTEBioVat.this.mNeededSievert = conditions[3];
+                MTEBioVat.this.mNeededSievert = sievert;
 
-                if (MTEBioVat.this.mGlassTier < conditions[0]) {
-                    return CheckRecipeResultRegistry.insufficientMachineTier(conditions[0]);
+                if (MTEBioVat.this.mGlassTier < glass) {
+                    return CheckRecipeResultRegistry.insufficientMachineTier(glass);
                 }
 
-                if (conditions[2] == 0) {
+                if (!isExact) {
                     if (MTEBioVat.this.mSievert < MTEBioVat.this.mNeededSievert) {
                         return ResultWrongSievert.insufficientSievert(MTEBioVat.this.mNeededSievert);
                     }
-                } else if (MTEBioVat.this.mSievert != conditions[3]) {
-                    return ResultWrongSievert.wrongSievert(conditions[3]);
+                } else if (MTEBioVat.this.mSievert != sievert) {
+                    return ResultWrongSievert.wrongSievert(sievert);
                 }
 
                 return CheckRecipeResultRegistry.SUCCESSFUL;
@@ -818,7 +819,7 @@ public class MTEBioVat extends MTEEnhancedMultiBlockBase<MTEBioVat> implements I
 
     @Override
     public boolean onWireCutterRightClick(ForgeDirection side, ForgeDirection wrenchingSide, EntityPlayer aPlayer,
-        float aX, float aY, float aZ) {
+        float aX, float aY, float aZ, ItemStack aTool) {
         if (aPlayer.isSneaking()) {
             batchMode = !batchMode;
             if (batchMode) {

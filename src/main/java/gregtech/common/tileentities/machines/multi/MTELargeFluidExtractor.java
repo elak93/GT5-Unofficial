@@ -205,10 +205,10 @@ public class MTELargeFluidExtractor extends MTEExtendedPowerMultiBlockBase<MTELa
     @Override
     protected void setProcessingLogicPower(ProcessingLogic logic) {
         logic.setAmperageOC(true);
-        logic.setAvailableVoltage(this.getMaxInputEu());
+        logic.setAvailableVoltage(GTUtility.roundUpVoltage(this.getMaxInputVoltage()));
         logic.setAvailableAmperage(1);
         logic.setEuModifier(getEUMultiplier());
-        logic.setMaxParallel(getParallels());
+        logic.setMaxParallel(getTrueParallel());
         logic.setSpeedBonus(1.0f / getSpeedBonus());
     }
 
@@ -394,7 +394,7 @@ public class MTELargeFluidExtractor extends MTEExtendedPowerMultiBlockBase<MTELa
 
         ArrayList<String> data = new ArrayList<>(Arrays.asList(super.getInfoData()));
 
-        data.add(String.format("Max Parallels: %s%d%s", YELLOW, getParallels(), RESET));
+        data.add(String.format("Max Parallels: %s%d%s", YELLOW, getMaxParallelRecipes(), RESET));
         data.add(String.format("Heating Coil Speed Bonus: +%s%.0f%s %%", YELLOW, getCoilSpeedBonus() * 100, RESET));
         data.add(String.format("Total Speed Multiplier: %s%.0f%s %%", YELLOW, getSpeedBonus() * 100, RESET));
         data.add(String.format("Total EU/t Multiplier: %s%.0f%s %%", YELLOW, getEUMultiplier() * 100, RESET));
@@ -402,7 +402,8 @@ public class MTELargeFluidExtractor extends MTEExtendedPowerMultiBlockBase<MTELa
         return data.toArray(new String[0]);
     }
 
-    public int getParallels() {
+    @Override
+    public int getMaxParallelRecipes() {
         return Math.max(1, mSolenoidLevel == null ? 0 : (PARALLELS_PER_SOLENOID * mSolenoidLevel));
     }
 
@@ -422,7 +423,7 @@ public class MTELargeFluidExtractor extends MTEExtendedPowerMultiBlockBase<MTELa
 
     @Override
     public boolean onWireCutterRightClick(ForgeDirection side, ForgeDirection wrenchingSide, EntityPlayer aPlayer,
-        float aX, float aY, float aZ) {
+        float aX, float aY, float aZ, ItemStack aTool) {
         batchMode = !batchMode;
         if (batchMode) {
             GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOn"));

@@ -193,7 +193,6 @@ public enum ItemList implements IItemContainer {
     White_Dwarf_Shape_Extruder_Small_Gear,
     White_Dwarf_Shape_Extruder_ToolHeadDrill,
 
-    Crate_Empty,
     Credit_Copper,
     Credit_Iron,
     Credit_Silver,
@@ -664,7 +663,6 @@ public enum ItemList implements IItemContainer {
     Tool_Scanner,
     Tool_DataOrb,
     Tool_DataStick,
-    Tool_Sonictron,
     Tool_Sword_Bronze,
     Tool_Pickaxe_Bronze,
     Tool_Shovel_Bronze,
@@ -1026,6 +1024,21 @@ public enum ItemList implements IItemContainer {
     Wireless_Dynamo_Energy_UXV,
     Wireless_Dynamo_Energy_MAX,
 
+    Cover_Wireless_Energy_LV,
+    Cover_Wireless_Energy_MV,
+    Cover_Wireless_Energy_HV,
+    Cover_Wireless_Energy_EV,
+    Cover_Wireless_Energy_IV,
+    Cover_Wireless_Energy_LuV,
+    Cover_Wireless_Energy_ZPM,
+    Cover_Wireless_Energy_UV,
+    Cover_Wireless_Energy_UHV,
+    Cover_Wireless_Energy_UEV,
+    Cover_Wireless_Energy_UIV,
+    Cover_Wireless_Energy_UMV,
+    Cover_Wireless_Energy_UXV,
+    Cover_Wireless_Energy_MAX,
+
     Hatch_Input_ULV,
     Hatch_Input_LV,
     Hatch_Input_MV,
@@ -1098,6 +1111,7 @@ public enum ItemList implements IItemContainer {
     Hatch_DataAccess_UV,
 
     Hatch_HeatSensor,
+    Hatch_BlackHoleUtility,
 
     Battery_Buffer_1by1_ULV,
     Battery_Buffer_1by1_LV,
@@ -1507,6 +1521,7 @@ public enum ItemList implements IItemContainer {
     Hawking_Glass,
     Black_Hole_Opener,
     Black_Hole_Closer,
+    Black_Hole_Stabilizer,
 
     Machine_Multi_IndustrialBrewery,
 
@@ -2033,6 +2048,15 @@ public enum ItemList implements IItemContainer {
     Machine_HV_LightningRod,
     Machine_EV_LightningRod,
 
+    Machine_LV_SolarPanel,
+    Machine_MV_SolarPanel,
+    Machine_HV_SolarPanel,
+    Machine_EV_SolarPanel,
+    Machine_IV_SolarPanel,
+    Machine_LuV_SolarPanel,
+    Machine_ZPM_SolarPanel,
+    Machine_UV_SolarPanel,
+
     ULV_Coil,
     LV_Coil,
     MV_Coil,
@@ -2192,7 +2216,6 @@ public enum ItemList implements IItemContainer {
     Hull_UMV,
     Hull_UXV,
     Hull_MAXV,
-    // todo: move them from gt.blockcasingsNH in NHCore to here
     Casing_UEV,
     Casing_UIV,
     Casing_UMV,
@@ -2580,6 +2603,20 @@ public enum ItemList implements IItemContainer {
     ResearchCompleter,
     SpaceElevatorController, // Populated in GTNH-Intergalactic
     Spray_Color_Infinite,
+    Casing_AirFilter_Turbine_T1,
+    Casing_AirFilter_Vent_T1,
+    Casing_AirFilter_Turbine_T2,
+    Casing_AirFilter_Vent_T2,
+    Casing_AirFilter_Turbine_T3,
+    Casing_AirFilter_Vent_T3,
+    Casing_Pyrolyse,
+    NameRemover,
+    Hatch_Nanite,
+    Hatch_Catalyst_Bulk,
+    Machine_Multi_AirFilterT1,
+    Machine_Multi_AirFilterT2,
+    Machine_Multi_AirFilterT3,
+
     // semicolon after the comment to reduce merge conflicts
     ;
 
@@ -2611,7 +2648,16 @@ public enum ItemList implements IItemContainer {
             Hatch_Output_Bus_EV, Hatch_Output_Bus_IV, Hatch_Output_Bus_LuV, Hatch_Output_Bus_ZPM, Hatch_Output_Bus_UV,
             Hatch_Output_Bus_MAX },
         HATCHES_MUFFLER = { Hatch_Muffler_LV, Hatch_Muffler_LV, Hatch_Muffler_MV, Hatch_Muffler_HV, Hatch_Muffler_EV,
-            Hatch_Muffler_IV, Hatch_Muffler_LuV, Hatch_Muffler_ZPM, Hatch_Muffler_UV, Hatch_Muffler_MAX };
+            Hatch_Muffler_IV, Hatch_Muffler_LuV, Hatch_Muffler_ZPM, Hatch_Muffler_UV, Hatch_Muffler_MAX },
+        WIRELESS_ENERGY_HATCHES = { Wireless_Hatch_Energy_ULV, Wireless_Hatch_Energy_LV, Wireless_Hatch_Energy_MV,
+            Wireless_Hatch_Energy_HV, Wireless_Hatch_Energy_EV, Wireless_Hatch_Energy_IV, Wireless_Hatch_Energy_LuV,
+            Wireless_Hatch_Energy_ZPM, Wireless_Hatch_Energy_UV, Wireless_Hatch_Energy_UHV, Wireless_Hatch_Energy_UEV,
+            Wireless_Hatch_Energy_UIV, Wireless_Hatch_Energy_UMV, Wireless_Hatch_Energy_UXV,
+            Wireless_Hatch_Energy_MAX },
+        WIRELESS_ENERGY_COVERS = { Cover_Wireless_Energy_LV, Cover_Wireless_Energy_MV, Cover_Wireless_Energy_HV,
+            Cover_Wireless_Energy_EV, Cover_Wireless_Energy_IV, Cover_Wireless_Energy_LuV, Cover_Wireless_Energy_ZPM,
+            Cover_Wireless_Energy_UV, Cover_Wireless_Energy_UHV, Cover_Wireless_Energy_UEV, Cover_Wireless_Energy_UIV,
+            Cover_Wireless_Energy_UMV, Cover_Wireless_Energy_UXV, Cover_Wireless_Energy_MAX };
     public static Fluid sOilExtraHeavy, sEpichlorhydrin, sDrillingFluid, sBlueVitriol, sNickelSulfate, sGreenVitriol,
         sToluene, sNitrationMixture, sRocketFuel, sHydricSulfur, sIndiumConcentrate, sLeadZincSolution,
         sHydrochloricAcid;

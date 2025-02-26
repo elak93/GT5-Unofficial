@@ -949,6 +949,7 @@ import gregtech.api.metatileentity.implementations.MTEBasicMachineWithRecipe;
 import gregtech.api.metatileentity.implementations.MTECable;
 import gregtech.api.metatileentity.implementations.MTEFluid;
 import gregtech.api.metatileentity.implementations.MTEFrame;
+import gregtech.api.metatileentity.implementations.MTEHatchBulkCatalystHousing;
 import gregtech.api.metatileentity.implementations.MTEHatchDataAccess;
 import gregtech.api.metatileentity.implementations.MTEHatchDynamo;
 import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
@@ -958,6 +959,7 @@ import gregtech.api.metatileentity.implementations.MTEHatchMagnet;
 import gregtech.api.metatileentity.implementations.MTEHatchMaintenance;
 import gregtech.api.metatileentity.implementations.MTEHatchMuffler;
 import gregtech.api.metatileentity.implementations.MTEHatchMultiInput;
+import gregtech.api.metatileentity.implementations.MTEHatchNanite;
 import gregtech.api.metatileentity.implementations.MTEHatchOutput;
 import gregtech.api.metatileentity.implementations.MTEHatchOutputBus;
 import gregtech.api.metatileentity.implementations.MTEHatchQuadrupleHumongous;
@@ -993,6 +995,7 @@ import gregtech.common.tileentities.generators.MTEMagicEnergyConverter;
 import gregtech.common.tileentities.generators.MTEMagicalEnergyAbsorber;
 import gregtech.common.tileentities.generators.MTENaquadahReactor;
 import gregtech.common.tileentities.generators.MTEPlasmaGenerator;
+import gregtech.common.tileentities.generators.MTESolarGenerator;
 import gregtech.common.tileentities.generators.MTESteamTurbine;
 import gregtech.common.tileentities.machines.MTEBasicHullBronze;
 import gregtech.common.tileentities.machines.MTEBasicHullBronzeBricks;
@@ -1013,6 +1016,7 @@ import gregtech.common.tileentities.machines.basic.MTEMassfabricator;
 import gregtech.common.tileentities.machines.basic.MTEMicrowaveEnergyTransmitter;
 import gregtech.common.tileentities.machines.basic.MTEMiner;
 import gregtech.common.tileentities.machines.basic.MTEMonsterRepellent;
+import gregtech.common.tileentities.machines.basic.MTENameRemover;
 import gregtech.common.tileentities.machines.basic.MTEPotionBrewer;
 import gregtech.common.tileentities.machines.basic.MTEPump;
 import gregtech.common.tileentities.machines.basic.MTEReplicator;
@@ -1023,6 +1027,9 @@ import gregtech.common.tileentities.machines.basic.MTETurboCharger;
 import gregtech.common.tileentities.machines.basic.MTEWorldAccelerator;
 import gregtech.common.tileentities.machines.long_distance.MTELongDistancePipelineFluid;
 import gregtech.common.tileentities.machines.long_distance.MTELongDistancePipelineItem;
+import gregtech.common.tileentities.machines.multi.MTEAirFilter1;
+import gregtech.common.tileentities.machines.multi.MTEAirFilter2;
+import gregtech.common.tileentities.machines.multi.MTEAirFilter3;
 import gregtech.common.tileentities.machines.multi.MTEAssemblyLine;
 import gregtech.common.tileentities.machines.multi.MTEBrickedBlastFurnace;
 import gregtech.common.tileentities.machines.multi.MTECharcoalPit;
@@ -1079,6 +1086,7 @@ import gregtech.common.tileentities.machines.multi.MTETranscendentPlasmaMixer;
 import gregtech.common.tileentities.machines.multi.MTEVacuumFreezer;
 import gregtech.common.tileentities.machines.multi.MTEWormholeGenerator;
 import gregtech.common.tileentities.machines.multi.compressor.MTEBlackHoleCompressor;
+import gregtech.common.tileentities.machines.multi.compressor.MTEBlackHoleUtility;
 import gregtech.common.tileentities.machines.multi.compressor.MTEHIPCompressor;
 import gregtech.common.tileentities.machines.multi.compressor.MTEHeatSensor;
 import gregtech.common.tileentities.machines.multi.compressor.MTEIndustrialCompressor;
@@ -4387,7 +4395,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 RecipeMaps.fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4403,7 +4411,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 RecipeMaps.fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4419,7 +4427,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 RecipeMaps.fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4435,7 +4443,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 RecipeMaps.fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4451,7 +4459,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 RecipeMaps.fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4467,7 +4475,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4483,7 +4491,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4499,7 +4507,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4515,7 +4523,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4531,7 +4539,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4547,7 +4555,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -4563,7 +4571,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 MachineType.FLUID_HEATER.tooltipDescription(),
                 fluidHeaterRecipes,
                 1,
-                0,
+                1,
                 true,
                 SoundResource.NONE,
                 MTEBasicMachineWithRecipe.SpecialEffects.NONE,
@@ -12207,25 +12215,55 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 .getStackForm(1));
     }
 
+    private static void registerSolarPanels() {
+        ItemList.Machine_LV_SolarPanel.set(
+            new MTESolarGenerator(SOLAR_PANEL_LV.ID, "basicgenerator.solarpanel.01", "Basic Solar Panel", 1)
+                .getStackForm(1));
+        ItemList.Machine_MV_SolarPanel.set(
+            new MTESolarGenerator(SOLAR_PANEL_MV.ID, "basicgenerator.solarpanel.02", "Advanced Solar Panel", 2)
+                .getStackForm(1));
+        ItemList.Machine_HV_SolarPanel.set(
+            new MTESolarGenerator(SOLAR_PANEL_HV.ID, "basicgenerator.solarpanel.03", "Advanced Solar Panel II", 3)
+                .getStackForm(1));
+        ItemList.Machine_EV_SolarPanel.set(
+            new MTESolarGenerator(SOLAR_PANEL_EV.ID, "basicgenerator.solarpanel.04", "Advanced Solar Panel III", 4)
+                .getStackForm(1));
+        ItemList.Machine_IV_SolarPanel.set(
+            new MTESolarGenerator(SOLAR_PANEL_IV.ID, "basicgenerator.solarpanel.05", "Advanced Solar Panel IV", 5)
+                .getStackForm(1));
+        ItemList.Machine_LuV_SolarPanel.set(
+            new MTESolarGenerator(SOLAR_PANEL_LuV.ID, "basicgenerator.solarpanel.06", "Elite Solar Panel", 6)
+                .getStackForm(1));
+        ItemList.Machine_ZPM_SolarPanel.set(
+            new MTESolarGenerator(SOLAR_PANEL_ZPM.ID, "basicgenerator.solarpanel.07", "Elite Solar Panel II", 7)
+                .getStackForm(1));
+        ItemList.Machine_UV_SolarPanel.set(
+            new MTESolarGenerator(SOLAR_PANEL_UV.ID, "basicgenerator.solarpanel.08", "Ultimate Solar Panel", 8)
+                .getStackForm(1));
+    }
+
     private static void registerCombustionGenerators() {
         ItemList.Generator_Diesel_LV.set(
             new MTEDieselGenerator(
                 COMBUSTION_GENERATOR_LV.ID,
                 "basicgenerator.diesel.tier.01",
                 "Basic Combustion Generator",
-                1).getStackForm(1L));
+                1,
+                95).getStackForm(1L));
         ItemList.Generator_Diesel_MV.set(
             new MTEDieselGenerator(
                 COMBUSTION_GENERATOR_MV.ID,
                 "basicgenerator.diesel.tier.02",
                 "Advanced Combustion Generator",
-                2).getStackForm(1L));
+                2,
+                90).getStackForm(1L));
         ItemList.Generator_Diesel_HV.set(
             new MTEDieselGenerator(
                 COMBUSTION_GENERATOR_HV.ID,
                 "basicgenerator.diesel.tier.03",
                 "Turbo Combustion Generator",
-                3).getStackForm(1L));
+                3,
+                85).getStackForm(1L));
     }
 
     private static void registerGasTurbines() {
@@ -12377,6 +12415,23 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 "basicgenerator.plasmagenerator.tier.09",
                 "Ultimate Pocket Sun",
                 8).getStackForm(1L));
+    }
+
+    private static void registerNameRemover() {
+        ItemList.NameRemover
+            .set(new MTENameRemover(NAME_REMOVER.ID, "fix.name.remover", "Name Remover", 0).getStackForm(1L));
+    }
+
+    private static void registerAirFilters() {
+        ItemList.Machine_Multi_AirFilterT1.set(
+            new MTEAirFilter1(AIR_FILTER_CONTROLLER_T1.ID, "multimachine.airfilter.01", "Electric Air Filter T1")
+                .getStackForm(1L));
+        ItemList.Machine_Multi_AirFilterT2.set(
+            new MTEAirFilter2(AIR_FILTER_CONTROLLER_T2.ID, "multimachine.airfilter.02", "Electric Air Filter T2")
+                .getStackForm(1L));
+        ItemList.Machine_Multi_AirFilterT3.set(
+            new MTEAirFilter3(AIR_FILTER_CONTROLLER_T3.ID, "multimachine.airfilter.03", "Electric Air Filter T3")
+                .getStackForm(1L));
     }
 
     private static void generateWiresAndPipes() {
@@ -12889,6 +12944,7 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
         registerItemDistributor();
         registerRecipeFilter();
         registerLightningRods();
+        registerSolarPanels();
         registerCombustionGenerators();
         registerGasTurbines();
         registerSteamTurbines();
@@ -12945,6 +13001,8 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
         registerUnpackager();
         registerPrinter();
         registerOven();
+        registerNameRemover();
+        registerAirFilters();
 
         ItemList.AdvDebugStructureWriter.set(
             new MTEAdvDebugStructureWriter(
@@ -12981,6 +13039,12 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
                 8).getStackForm(1L));
         ItemList.Hatch_HeatSensor
             .set(new MTEHeatSensor(HEAT_DETECTOR_HATCH.ID, "hatch.heatsensor", "Heat Sensor Hatch", 7).getStackForm(1));
+        ItemList.Hatch_BlackHoleUtility.set(
+            new MTEBlackHoleUtility(
+                HATCH_BLACK_HOLE_UTILITY.ID,
+                "hatch.blackholeutility",
+                "Black Hole Utility Hatch",
+                11).getStackForm(1));
         ItemList.Hatch_pHSensor
             .set(new MTEHatchPHSensor(HATCH_PH_SENSOR.ID, "hatch.phsensor", "pH Sensor Hatch", 7).getStackForm(1));
         ItemList.Hatch_LensHousing
@@ -12988,6 +13052,15 @@ public class LoaderMetaTileEntities implements Runnable { // TODO CHECK CIRCUIT 
         ItemList.Hatch_LensIndicator.set(
             new MTEHatchLensIndicator(HATCH_LENS_INDICATOR.ID, "hatch.lensindicator", "Lens Indicator Hatch", 8)
                 .getStackForm(1L));
+        ItemList.Hatch_Nanite.set(
+            new MTEHatchNanite(HATCH_NANITE.ID, "hatch.nanite", "Nanite Containment Bus", 9, 2048).getStackForm(1));
+        ItemList.Hatch_Catalyst_Bulk.set(
+            new MTEHatchBulkCatalystHousing(
+                HATCH_CATALYST_BULK.ID,
+                "hatch.catalystbulk",
+                "Bulk Catalyst Housing",
+                10,
+                Integer.MAX_VALUE).getStackForm(1));
         generateWiresAndPipes();
     }
 

@@ -10,7 +10,6 @@ import static gregtech.api.enums.MetaTileEntityIDs.GT_MetaTileEntity_Solidifier_
 import static gregtech.api.enums.MetaTileEntityIDs.Hatch_Air_Intake;
 import static gregtech.api.enums.MetaTileEntityIDs.Hatch_Air_Intake_Extreme;
 import static gregtech.api.enums.MetaTileEntityIDs.Hatch_Input_Cryotheum;
-import static gregtech.api.enums.MetaTileEntityIDs.Hatch_Input_Naquadah;
 import static gregtech.api.enums.MetaTileEntityIDs.Hatch_Input_Pyrotheum;
 import static gregtech.api.enums.MetaTileEntityIDs.Hatch_Input_Steam;
 import static gregtech.api.enums.MetaTileEntityIDs.Hatch_Input_TurbineHousing;
@@ -52,7 +51,6 @@ import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.METHatchAirIn
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchAirIntakeExtreme;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchChiselBus;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchMufflerAdvanced;
-import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchNaquadah;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchReservoir;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchSolidifier;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchSuperBusInput;
@@ -97,13 +95,6 @@ public class GregtechCustomHatches {
                 5 // Casing texture
             ).getStackForm(1L));
 
-        GregtechItemList.Hatch_Input_Naquadah.set(
-            new MTEHatchNaquadah(
-                Hatch_Input_Naquadah.ID, // ID
-                "hatch.naquadah.input.tier.00", // unlocal name
-                "Naquadah Reactor Input hatch" // Local name
-            ).getStackForm(1L));
-
         GregtechItemList.Hatch_Input_TurbineHousing.set(
             new MTEHatchTurbineProvider(
                 Hatch_Input_TurbineHousing.ID, // ID
@@ -120,7 +111,7 @@ public class GregtechCustomHatches {
                 Hatch_Air_Intake_Extreme.ID,
                 "hatch.air.intake.tier.01",
                 "Extreme Air Intake Hatch",
-                6).getStackForm(1L));
+                7).getStackForm(1L));
 
         // Multiblock Reservoir Hatch
         GregtechItemList.Hatch_Reservoir.set(

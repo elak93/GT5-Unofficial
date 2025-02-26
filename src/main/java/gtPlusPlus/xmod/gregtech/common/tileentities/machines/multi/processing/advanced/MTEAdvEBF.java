@@ -100,7 +100,7 @@ public class MTEAdvEBF extends GTPPMultiBlockBase<MTEAdvEBF> implements ISurviva
             .addInfo("Constructed exactly the same as a normal EBF")
             .addPollutionAmount(getPollutionPerSecond(null))
             .addController("Bottom center")
-            .addCasingInfoMin(mCasingName, 8, false)
+            .addCasingInfoMin(mCasingName, 6, false)
             .addInputHatch("Any Casing", 1)
             .addInputBus("Any Casing", 1)
             .addOutputBus("Any Casing", 1)
@@ -168,7 +168,7 @@ public class MTEAdvEBF extends GTPPMultiBlockBase<MTEAdvEBF> implements ISurviva
         mCasing = 0;
         mPyrotheumHatches.clear();
         setCoilLevel(HeatingCoilLevel.None);
-        return checkPiece(mName, 1, 3, 0) && mCasing >= 8 && getCoilLevel() != HeatingCoilLevel.None && checkHatch();
+        return checkPiece(mName, 1, 3, 0) && mCasing >= 6 && getCoilLevel() != HeatingCoilLevel.None && checkHatch();
     }
 
     @Override
@@ -201,8 +201,18 @@ public class MTEAdvEBF extends GTPPMultiBlockBase<MTEAdvEBF> implements ISurviva
     }
 
     @Override
+    protected IIconContainer getActiveGlowOverlay() {
+        return TexturesGtBlock.oMCAAdvancedEBFActiveGlow;
+    }
+
+    @Override
     protected IIconContainer getInactiveOverlay() {
         return TexturesGtBlock.oMCAAdvancedEBF;
+    }
+
+    @Override
+    protected IIconContainer getInactiveGlowOverlay() {
+        return TexturesGtBlock.oMCAAdvancedEBFGlow;
     }
 
     @Override
@@ -246,7 +256,7 @@ public class MTEAdvEBF extends GTPPMultiBlockBase<MTEAdvEBF> implements ISurviva
             }
         }.setSpeedBonus(1F / 2.2F)
             .setEuModifier(0.9F)
-            .setMaxParallelSupplier(this::getMaxParallelRecipes);
+            .setMaxParallelSupplier(this::getTrueParallel);
     }
 
     @Override

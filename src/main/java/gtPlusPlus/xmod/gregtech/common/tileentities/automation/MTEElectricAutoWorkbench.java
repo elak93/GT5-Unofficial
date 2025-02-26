@@ -27,7 +27,7 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEBasicTank;
 import gregtech.api.objects.GTItemStack;
-import gregtech.api.objects.GTRenderedTexture;
+import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
@@ -700,7 +700,7 @@ public class MTEElectricAutoWorkbench extends MTEBasicTank implements IAddGregte
     @Override
     public boolean allowPullStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, ForgeDirection side,
         ItemStack aStack) {
-        return mMode == 0 ? aIndex >= 10 : aIndex >= 18;
+        return mMode == 0 ? aIndex >= 9 : aIndex >= 18;
     }
 
     @Override
@@ -717,11 +717,6 @@ public class MTEElectricAutoWorkbench extends MTEBasicTank implements IAddGregte
     @Override
     public int getCapacity() {
         return 16000;
-    }
-
-    @Override
-    public int getTankPressure() {
-        return -100;
     }
 
     @Override
@@ -763,12 +758,12 @@ public class MTEElectricAutoWorkbench extends MTEBasicTank implements IAddGregte
 
     public ITexture[] getFront(final byte aColor) {
         return new ITexture[] { Textures.BlockIcons.MACHINE_CASINGS[mTier][aColor + 1],
-            new GTRenderedTexture(TexturesGtBlock.Casing_Adv_Workbench_Crafting_Overlay) };
+            TextureFactory.of(TexturesGtBlock.Casing_Adv_Workbench_Crafting_Overlay) };
     }
 
     public ITexture[] getBack(final byte aColor) {
         return new ITexture[] { Textures.BlockIcons.MACHINE_CASINGS[mTier][aColor + 1],
-            new GTRenderedTexture(BlockIcons.OVERLAY_PIPE) };
+            TextureFactory.of(BlockIcons.OVERLAY_PIPE) };
     }
 
     public ITexture[] getBottom(final byte aColor) {
@@ -777,12 +772,12 @@ public class MTEElectricAutoWorkbench extends MTEBasicTank implements IAddGregte
 
     public ITexture[] getTop(final byte aColor) {
         return new ITexture[] { Textures.BlockIcons.MACHINE_CASINGS[mTier][aColor + 1],
-            new GTRenderedTexture(TexturesGtBlock.Casing_Adv_Workbench_Crafting_Overlay) };
+            TextureFactory.of(TexturesGtBlock.Casing_Adv_Workbench_Crafting_Overlay) };
     }
 
     public ITexture[] getSides(final byte aColor) {
         return new ITexture[] { Textures.BlockIcons.MACHINE_CASINGS[mTier][aColor + 1],
-            new GTRenderedTexture(TexturesGtBlock.Casing_Adv_Workbench_Crafting_Overlay) };
+            TextureFactory.of(TexturesGtBlock.Casing_Adv_Workbench_Crafting_Overlay) };
     }
 
     @Override

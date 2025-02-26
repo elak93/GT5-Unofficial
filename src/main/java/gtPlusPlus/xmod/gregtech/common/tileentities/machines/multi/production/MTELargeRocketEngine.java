@@ -94,6 +94,11 @@ public class MTELargeRocketEngine extends GTPPMultiBlockBase<MTELargeRocketEngin
     }
 
     @Override
+    public boolean supportsPowerPanel() {
+        return false;
+    }
+
+    @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(getMachineType())
@@ -118,7 +123,7 @@ public class MTELargeRocketEngine extends GTPPMultiBlockBase<MTELargeRocketEngin
             .addController("Front Center")
             .addCasingInfoMin(mCasingName, 64, false)
             .addCasingInfoMin(mGearboxName, 8, false)
-            .addStructureHint("Air Intake Hatch", 1)
+            .addStructureHint("item.GTPP.air_intake_hatch.name", 1)
             .addInputBus("Side center line", 1)
             .addInputHatch("Side center line", 1)
             .addMaintenanceHatch("Any Block Touching Inconel Reinforced Casing", 1)
@@ -190,8 +195,18 @@ public class MTELargeRocketEngine extends GTPPMultiBlockBase<MTELargeRocketEngin
     }
 
     @Override
+    protected IIconContainer getActiveGlowOverlay() {
+        return TexturesGtBlock.oMCALargeRocketEngineActiveGlow;
+    }
+
+    @Override
     protected IIconContainer getInactiveOverlay() {
         return TexturesGtBlock.oMCALargeRocketEngine;
+    }
+
+    @Override
+    protected IIconContainer getInactiveGlowOverlay() {
+        return TexturesGtBlock.oMCALargeRocketEngineGlow;
     }
 
     @Override
@@ -511,10 +526,5 @@ public class MTELargeRocketEngine extends GTPPMultiBlockBase<MTELargeRocketEngin
     @Override
     public int getMaxParallelRecipes() {
         return 1;
-    }
-
-    @Override
-    public boolean doesBindPlayerInventory() {
-        return false;
     }
 }

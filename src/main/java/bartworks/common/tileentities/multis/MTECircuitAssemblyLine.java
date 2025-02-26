@@ -191,7 +191,11 @@ public class MTECircuitAssemblyLine extends MTEEnhancedMultiBlockBase<MTECircuit
             .addInputHatch("Any layer 1 casing", 2)
             .addInputBus("As specified on layer 1", 3, 4)
             .addOutputBus("As specified in final slice on layer 1", 4)
-            .addOtherStructurePart(getColoredTierNameFromTier((byte) 4) + "+ Tier Glass", "As specified on layer 2", 5)
+            .addOtherStructurePart(
+                StatCollector
+                    .translateToLocalFormatted("tooltip.bw.structure.tier_glass", getColoredTierNameFromTier((byte) 4)),
+                "As specified on layer 2",
+                5)
             .addMaintenanceHatch("Any layer 1 casing", 2)
             .toolTipFinisher();
         return tt;
@@ -588,14 +592,13 @@ public class MTECircuitAssemblyLine extends MTEEnhancedMultiBlockBase<MTECircuit
 
     @Override
     public boolean onWireCutterRightClick(ForgeDirection side, ForgeDirection wrenchingSide, EntityPlayer aPlayer,
-        float aX, float aY, float aZ) {
+        float aX, float aY, float aZ, ItemStack aTool) {
         if (!aPlayer.isSneaking()) {
             if (mode == 0) return false;
             inputSeparation = !inputSeparation;
             GTUtility.sendChatToPlayer(
                 aPlayer,
                 StatCollector.translateToLocal("GT5U.machines.separatebus") + " " + inputSeparation);
-            return true;
         } else {
             batchMode = !batchMode;
             if (batchMode) {
@@ -603,8 +606,8 @@ public class MTECircuitAssemblyLine extends MTEEnhancedMultiBlockBase<MTECircuit
             } else {
                 GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOff"));
             }
-            return true;
         }
+        return true;
     }
 
     @Override
